@@ -80,13 +80,13 @@ public class MovieRepository {
 
 
     public void deleteAllDirectors(){
-        List<String> movies = new ArrayList<>();
+        List<String> movies  = new ArrayList<>();
         for(String name : dbOfMovieDirectorPair.keySet()) {
             movies = dbOfMovieDirectorPair.get(name);
 
             for (String movieName : movies) {
-                if (dbOfMovie.containsKey(name)) {
-                    dbOfMovie.remove(name);
+                if (dbOfMovie.containsKey(movieName)) {
+                    dbOfMovie.remove(movieName);
                 }
             }
         }
@@ -94,6 +94,7 @@ public class MovieRepository {
             if(dbOfDirector.containsKey(name)){
                 dbOfDirector.remove(name);
             }
+            dbOfMovieDirectorPair.remove(name);
         }
 
     }
