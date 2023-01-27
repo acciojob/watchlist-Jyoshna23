@@ -15,8 +15,8 @@ public class MovieController {
 
     @PostMapping("/add_movie")
     public ResponseEntity addMovie(@RequestBody Movie movie){
-        movieService.addMovie(movie);
-        return new ResponseEntity<>(movie, HttpStatus.CREATED);
+        String response = movieService.addMovie(movie);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/add_director")
@@ -25,35 +25,32 @@ public class MovieController {
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
-    @PostMapping("/addMovieDirectorpair")
+    @PostMapping("/add-movie-director-pair")
     public ResponseEntity  addMovieDirectorPair(@RequestParam("movie") String movie, @RequestParam("director") String director){
-        String response = movieService.addMovieDirectorPair(movie,director);
-        return new ResponseEntity<>(response,HttpStatus.CREATED);
+        movieService.addMovieDirectorPair(movie,director);
+        return new ResponseEntity<>("new movie director pair added",HttpStatus.CREATED);
     }
 
-    @GetMapping("/get_movieBy_Name/{name}")
+    @GetMapping("/get-movie-by-name/{name}")
     public ResponseEntity getMovieByName(@PathVariable("name") String name){
         Movie movie = movieService.getMovieByName(name);
         return new ResponseEntity<>(movie,HttpStatus.FOUND);
     }
 
-    @GetMapping("/get_DirectorBy_Name/{name}")
+    @GetMapping("/get-director-by-name/{name}")
     public ResponseEntity getDirectorByName(@PathVariable("name") String name){
         Director director = movieService.getDirectorByName(name);
         return new ResponseEntity<>(director,HttpStatus.FOUND);
     }
 
-    @GetMapping("/get_movieBy_Director/{name}")
-    public ResponseEntity getMoviesByDirectorName(@PathVariable("name") String directorName){
-        List<String> movies = movieService.getMoviesByDirectorName(directorName);
-        return new ResponseEntity<>(movies,HttpStatus.FOUND);
+
+    @GetMapping("/get-movies-by-director-name/{director}")
+    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String director){
+        List<String> movies = movieService.getMoviesByDirectorName(director);
+        return new ResponseEntity<>(movies, HttpStatus.CREATED);
     }
 
-//    @GetMapping("/get-movies-by-director-name/{director}")
-//    public ResponseEntity<List<String>> getMoviesByDirectorName(@PathVariable String director){
-//        List<String> movies = movieService.findMoviesFromDirector(director);
-//        return new ResponseEntity<>(movies, HttpStatus.CREATED);
-//    }
+
 
     @GetMapping("/findAllMovies")
     public ResponseEntity findAllMovies(){
